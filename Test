@@ -1,0 +1,61 @@
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+
+public class AmericanGolf_Excercise3 {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		
+		WebDriver driver = new FirefoxDriver();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.navigate().to("http://www.americangolf.co.uk/");
+		
+		
+		driver.findElement(By.xpath("//*[@id='navigation']/nav/ul/li[1]/a")).click();
+		WebElement Leftmenu = driver.findElement(By.xpath("//*[@id='secondary']/div[1]/div/div[2]/div/ul"));
+		
+		List<WebElement> leftlinks = Leftmenu.findElements(By.tagName("a"));
+		
+		for(int i=0;i<leftlinks.size();i++)
+		{
+			System.out.println(leftlinks.get(i).getText());
+			String linktext= leftlinks.get(i).getText();
+			String temp[]=linktext.split("\\(");
+			temp =temp[1].split("\\)");	
+			System.out.println(temp[0]);
+						
+			leftlinks.get(i).click();
+//String productitems= driver.findElement(By.xpath("//*[@id='primary']/div[2]/div[1]/div[1]/span")).getText();
+			
+			String productitems= driver.findElement(By.xpath("//div[@class='results-hits']/span[@class='results-hits-count']")).getText();
+			System.out.println(productitems);
+			if(temp[0]==productitems)
+			{
+				System.out.println("ITEMS are matching");
+			}
+			driver.findElement(By.xpath("//*[@id='main']/div[2]/h3/a")).click();
+			Leftmenu = driver.findElement(By.xpath("//*[@id='secondary']/div[1]/div/div[2]/div/ul"));
+			leftlinks = Leftmenu.findElements(By.tagName("a"));
+			
+			
+			
+			//Opening bracket is regular expression. You need to put \\ if your are using brackets
+			
+			
+		}
+		
+		
+		
+		
+
+	}
+
+}
